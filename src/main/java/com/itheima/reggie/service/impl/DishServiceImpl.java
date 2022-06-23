@@ -163,7 +163,6 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 
         Long dishId = dishDto.getId();
 
-
         Dish dish = this.getById(dishId);
         if (!dish.getName().equals(dishDto.getName())) {
             LambdaQueryWrapper<Dish> qw = new LambdaQueryWrapper<>();

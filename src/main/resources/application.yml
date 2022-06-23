@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: 8080
 spring:
   application:
     name: reggie_take_out
@@ -14,12 +14,7 @@ mybatis-plus:
     #在映射实体或者属性时，将数据库中表名和字段名中的下划线去掉，按照驼峰命名法映射
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  global-config:
-    db-config:
-      id-type: ASSIGN_ID
-      logic-delete-field: isDeleted
-      logic-delete-value: 1
-      logic-not-delete-value: 0
+
 
 
 reggie:

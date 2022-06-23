@@ -6,7 +6,6 @@ import com.itheima.reggie.entity.Category;
 import com.itheima.reggie.service.CategoryService;
 import com.itheima.reggie.web.R;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -118,23 +117,13 @@ public class CategoryController {
      */
     @GetMapping("/list")
     public R<List<Category>> selectByType(Category category) {
-//        if (type != null) {
+        //条件构造器
+        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+        //添加条件
+        queryWrapper.eq(category.getType() != null,Category::getType,category.getType())
+                .orderByAsc(Category::getSort).orderByDesc(Category::getUpdateTime);
 
-        String name = category.getName();
-        Integer type = category.getType();
-        LambdaQueryWrapper<Category> lqw = new LambdaQueryWrapper<>();
-        lqw.eq(type != null, Category::getType, type)
-                //.eq(categoryId!=null,Category::getId,categoryId)
-                .like(StringUtils.isNotBlank(name),Category::getName,name)
-                .orderByAsc(Category::getSort)
-                .orderByDesc(Category::getUpdateTime);
-
-        List<Category> list = categoryService.list(lqw);
-        if (list != null && list.size() > 0) {
-            return R.success("查询成功", list);
-        }
-        return R.error("查无信息");
-//        }
-//        return R.error("参数有误");
+        List<Category> list = categoryService.list(queryWrapper);
+        return R.success("成功",list);
     }
 }
